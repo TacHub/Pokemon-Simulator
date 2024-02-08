@@ -29,6 +29,8 @@ router.post("/trainer", async (req, res, next) => {
       return res.sendStatus(400);
     const trainers = await findTrainers();
     // TODO: すでにトレーナー（S3 オブジェクト）が存在していれば409を返す
+    if (trainers.some(({ Key }) => Key === `${req.body.name}.json`))
+      return res.sendStatus(409);
     const result = await upsertTrainer(req.body.name, req.body);
     res.status(result["$metadata"].httpStatusCode).send(result);
   } catch (err) {
