@@ -1,6 +1,9 @@
 import { Router } from "express";
 import { 
-  findTrainers, upsertTrainer, findTrainer, deleteTrainer 
+  findTrainers, 
+  upsertTrainer, 
+  findTrainer, 
+  deleteTrainer, 
 } from "~/server/utils/trainer";
 import { findPokemon } from "~/server/utils/pokemon";
 
