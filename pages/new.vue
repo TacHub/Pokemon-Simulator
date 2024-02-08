@@ -24,7 +24,25 @@ const { dialog, onOpen, onClose } = useDialog(); // 4
 <template>
   <div>
     <h1>あたらしくはじめる</h1>
-    <form @submit.prevent></form>
+    <!-- ページに反映させる文字などを記述する -->
+    <p>では初めに、君の名前を教えてもらおう！</p>
+    <form @submit.prevent> 
+      <div class="item">
+        <label for="name">名前</label>
+        <span id="name-description">特定の文字は取り除かれるぞ！</span>
+        <input
+          id="name"
+          v-model="trainerName"
+          aria-describedby="name-description"
+          @keydown.enter="valid && onOpen(true)"
+        />
+      </div>
+      <GamifyButton type="button" :disabled="!valid" @click="onOpen(true)"
+        >決定</GamifyButton
+      >
+    </form>
+    <!-- ここまで、名前の入力と「決定」ボタンを反映 -->
+    
   </div>
 </template>
 
