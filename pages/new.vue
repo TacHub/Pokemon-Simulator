@@ -60,7 +60,6 @@ const { dialog, onOpen, onClose } = useDialog();
         </GamifyItem>
       </GamifyList>
     </GamifyDialog>
-    <!-- 名前の確認欄を実装 -->
   </div>
 </template>
 
