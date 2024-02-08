@@ -106,7 +106,7 @@ const {
 
     <!-- ポケモンのニックネーム変更 -->
     <GamifyDialog
-      v-if = "nicknameDialog"
+      v-if="nicknameDialog"
       id="confirm-nickname"
       title="ニックネーム"
       :description="`${nicknameDialog.name}の新しいニックネームは？`"
@@ -132,13 +132,24 @@ const {
       </GamifyList>
     </GamifyDialog>
     <!-- オーキド博士に送る前に、確認 -->
-  <GamifyDialog>
-    
-  </GamifyDialog>
-
-
-
-    
+    <GamifyDialog
+    v-if ="releaseDialog"
+    id="confirm-release"
+    title="確認"
+    :description="`本当に${ 
+      releaseDialog.nickname || releaseDialog.name
+      }を送るんだな？！この操作は取り消せないぞ！`"
+      @close="onCloseRelease"
+    >
+      <GamifyList :border="false" direction="horizon">
+        <GamifyItem>
+          <GamifyButton @click="onCloseRelease">いいえ</GamifyButton>
+        </GamifyItem>
+        <GamifyItem>
+          <GamifyButton @click="onRelease(releaseDialog.id)">はい</GamifyButton>
+        </GamifyItem>
+      </GamifyList>
+    </GamifyDialog>
   </div>
 
 </template>
