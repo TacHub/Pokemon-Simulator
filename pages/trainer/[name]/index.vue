@@ -73,7 +73,9 @@ const {
       <img src="/avatar.png" />
       <span>{{trainer.name}}</span>
     </div>
-    <GameifyButton @click="onOpenDelete(true)">マサラタウンに帰る(トレーナー情報の削除)</GameifyButton>
+    <GamifyButton @click="onOpenDelete(true)"
+    >マサラタウンに帰る</GamifyButton
+    >
       <!-- 手持ちのポケモンを表示 -->
     <h2>手持ちのポケモン</h2>
     <CatchButton :to="`/trainer/${route.params.name}/catch`"
