@@ -42,7 +42,23 @@ const { dialog, onOpen, onClose } = useDialog(); // 4
       >
     </form>
     <!-- ここまで、名前の入力と「決定」ボタンを反映 -->
-    
+    <GamifyDialog
+      v-if="dialog"
+      id="confirm-submit"
+      title="確認"
+      :description="`ふむ・・・君の名前は「${safeTrainerName}」というんだな！`"
+      @close="onClose"
+    >
+      <GamifyList :border="false" direction="horizon">
+        <GamifyItem>
+          <GamifyButton @click="onClose">いいえ</GamifyButton>
+        </GamifyItem>
+        <GamifyItem>
+          <GamifyButton @click="onSubmit">はい</GamifyButton>
+        </GamifyItem>
+      </GamifyList>
+    </GamifyDialog>
+    <!-- 名前の確認欄を実装 -->
   </div>
 </template>
 
