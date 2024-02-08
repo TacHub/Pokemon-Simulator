@@ -2,8 +2,9 @@
 1. startブランチ作成したら、"npm install"
 2. "npm i @aws-sdk/node-http-handler proxy-agent"のインストール
 3. 実装
-  * server/utils/routers
-  
+  * server/utils/routers.js
+  * server/utils/trainer.js
+  * pages/*
 
 
 # lyceum-pokemon
