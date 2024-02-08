@@ -64,4 +64,35 @@ const {
 } = useDialog();
 </script>
 
-<template></template>
+
+<template>
+  <div>
+    <!-- トレーナー情報を表示 -->
+    <h1>トレーナー情報</h1>
+    <div class="trainer-info">
+      <img src="/avatar.png" />
+      <span>{{trainer.name}}</span>
+    </div>
+    <GameifyButton @click="onOpenDelete(true)">マサラタウンに帰る(トレーナー情報の削除)</GameifyButton>
+      <!-- 手持ちのポケモンを表示 -->
+    <h2>手持ちのポケモン</h2>
+    <CatchButton :to="`/trainer/${route.params.name}/catch`"
+      >ポケモンを掴まえる</CatchButton>
+    <!-- ポケモンのニックネーム変更、博士へ送る -->
+      <GamifyList>
+      <GamifyItem v-for="pokemon in trainer.pokemons" :key="pokemon.id">
+        <img :src="pokemon.sprites.front_default" />
+        <span class="pokemon-name">{{ pokemon.nickname || pokemon.name }}</span>
+        <GamifyButton @click="onOpenNickname(pokemon)">ニックネームを付ける</GamifyButton>
+        <GamifyButton @click="onOpenRelease(pokemon)">オーキド博士に送る</GamifyButton>      
+    </GamifyList>
+    <!-- マサラタウンに帰る前に、確認 -->
+    <!-- オーキド博士に送る前に、確認 -->
+
+
+
+
+    
+  </div>
+
+</template>
