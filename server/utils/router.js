@@ -85,31 +85,32 @@ router.delete("/trainer/:trainerName", async (req, res, next) => {
 
 // router.post
 router.put("/trainer/:trainerName/pokemon", async (req, res, next) => {
-  try {
-    const {trainerName, pokemonName} = req.params;
-    // TODO: リクエストボディにポケモン名が含まれていなければ400を返す
-    const trainer = await findTrainer(trainerName);
-    const pokemon = await findPokemon(pokemonName);
-    const {
-      order,
-      name,
-      sprites: { front_default },
-    } = pokemon;
-    trainer.pokemons.push({
-      id: (trainer.pokemons[trainer.pokemons.length - 1].id + 1)
-      +1,
-      nickname:"",
-      order,
-      name,
-      sprites:{front_default},
-    });
+    try {
+      const {trainerName, pokemonName} = req.params;
+      // TODO: リクエストボディにポケモン名が含まれていなければ400を返す
+      const pokemon = await findPokemon(pokemonName);
+      const trainer = await findTrainer(trainerName);
+      const {
+        order,
+        name,
+        sprites: { front_default },
+      } = pokemon;
+      trainer.pokemons.push({
+        id: (trainer.pokemons[trainer.pokemons.length - 1].id + 1)
+        +1,
+        nickname:"",
+        order,
+        name,
+        sprites:{front_default},
+      });
 
 
-    // TODO: 削除系 API エンドポイントを利用しないかぎりポケモンは保持する
-    const result = await upsertTrainer(trainerName, trainer);
-    res.status(result["$metadata"].httpStatusCode).send(result);
-  } catch (err) {
-    next(err);
+      // TODO: 削除系 API エンドポイントを利用しないかぎりポケモンは保持する
+      const result = await upsertTrainer(trainerName, trainer);
+      res.status(result["$metadata"].httpStatusCode).send(result);
+    } catch (err) {
+      console.error(err); // エラーメッセージをコンソールに出力
+      next(err);
     }
   },
 );
