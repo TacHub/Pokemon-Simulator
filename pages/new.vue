@@ -1,4 +1,25 @@
-<script setup></script>
+<script setup>
+const router = useRouter();
+const config = useRuntimeConfig();
+const trainerName = ref("");
+const safeTrainerName = computed(() => trimAvoidCharacters(trainerName.value)); // 1
+const valid = computed(() => safeTrainerName.value.length > 0); // 2
+const onSubmit = async () => {
+  const response = await $fetch("/api/trainer", { // 3
+    baseURL: config.public.backendOrigin,
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name: safeTrainerName.value,
+    }),
+  }).catch((e) => e);
+  if (response instanceof Error) return;
+  router.push(`/trainer/${safeTrainerName.value}`);
+};
+const { dialog, onOpen, onClose } = useDialog(); // 4
+</script>
 
 <template>
   <div>
