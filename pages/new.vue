@@ -2,10 +2,10 @@
 const router = useRouter();
 const config = useRuntimeConfig();
 const trainerName = ref("");
-const safeTrainerName = computed(() => trimAvoidCharacters(trainerName.value)); // 1
-const valid = computed(() => safeTrainerName.value.length > 0); // 2
+const safeTrainerName = computed(() => trimAvoidCharacters(trainerName.value));
+const valid = computed(() => safeTrainerName.value.length > 0);
 const onSubmit = async () => {
-  const response = await $fetch("/api/trainer", { // 3
+  const response = await $fetch("/api/trainer", {
     baseURL: config.public.backendOrigin,
     method: "POST",
     headers: {
@@ -18,7 +18,7 @@ const onSubmit = async () => {
   if (response instanceof Error) return;
   router.push(`/trainer/${safeTrainerName.value}`);
 };
-const { dialog, onOpen, onClose } = useDialog(); // 4
+const { dialog, onOpen, onClose } = useDialog();
 </script>
 
 <template>
@@ -26,7 +26,7 @@ const { dialog, onOpen, onClose } = useDialog(); // 4
     <h1>あたらしくはじめる</h1>
     <!-- ページに反映させる文字などを記述する -->
     <p>では初めに、君の名前を教えてもらおう！</p>
-    <form @submit.prevent> 
+    <form @submit.prevent>
       <div class="item">
         <label for="name">名前</label>
         <span id="name-description">特定の文字は取り除かれるぞ！</span>
@@ -37,9 +37,7 @@ const { dialog, onOpen, onClose } = useDialog(); // 4
           @keydown.enter="valid && onOpen(true)"
         />
       </div>
-      <GamifyButton type="button" :disabled="!valid" @click="onOpen(true)"
-        >決定</GamifyButton
-      >
+      <GamifyButton type="button" :disabled="!valid" @click="onOpen(true)">決定</GamifyButton>
     </form>
     <!-- ここまで、名前の入力と「決定」ボタンを反映 -->
     <GamifyDialog

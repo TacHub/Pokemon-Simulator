@@ -40,4 +40,41 @@ const onCatch = async (pokemon) => {
 };
 const { dialog, onOpen, onClose } = useDialog();
 </script>
-<template></template>
+
+<template>  
+  <div>
+    <h1>ポケモンを捕まえる</h1>
+    <p>{{pokemons.count}} 種類のポケモン</p>
+    <p>{{page + 1}} / {{maxPage + 1}} ページ</p>
+    <GamifyList>
+      <GamifyItem v-for="pokemon in pokemons.results" :key="pokemon.url">
+        <span class="pokemon-name">{{ pokemon.name }}</span>
+        <GamifyButton @click="onOpen(pokemon)">捕まえる</GamifyButton>
+      </GamifyItem>
+    </GamifyList>
+    <GamifyDialog
+      v-if="dialog"
+      id="confirm-catch"
+      title="確認"
+      :description="`ほう！ ${dialog.name} にするんじゃな？`"
+      @close="onClose"
+    >
+      <GamifyList :border="false" direction="horizon">
+        <GamifyItem>
+          <GamifyButton @click="onClose">いいえ</GamifyButton>
+        </GamifyItem>
+        <GamifyItem>
+          <GamifyButton @click="onCatch(dialog)">はい</GamifyButton>
+        </GamifyItem>
+      </GamifyList>
+    </GamifyDialog>
+    <GamifyList direction="horizon">
+      <GamifyItem>
+        <GamifyButton :disabled="!hasPrev" @click="onPrev">前へ</GamifyButton>
+      </GamifyItem>
+      <GamifyItem>
+        <GamifyButton :disabled="!hasNext" @click="onNext">次へ</GamifyButton>
+      </GamifyItem>
+    </GamifyList>
+  </div>
+</template>
