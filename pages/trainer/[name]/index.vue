@@ -63,3 +63,5 @@ const {
   onClose: onCloseRelease,
 } = useDialog();
 </script>
+
+<template></template>

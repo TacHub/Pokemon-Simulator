@@ -40,3 +40,4 @@ const onCatch = async (pokemon) => {
 };
 const { dialog, onOpen, onClose } = useDialog();
 </script>
+<template></template>
