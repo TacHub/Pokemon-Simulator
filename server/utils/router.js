@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { findTrainers, upsertTrainer } from "~/server/utils/trainer";
+import { findTrainers, upsertTrainer, findTrainer, deleteTrainer } from "~/server/utils/trainer";
 import { findPokemon } from "~/server/utils/pokemon";
 
 const router = Router();
@@ -14,7 +14,7 @@ router.get("/trainers", async (_req, res, next) => {
     const trainers = await findTrainers();
     // TODO: 期待するレスポンスボディに変更する
     const trainerNames = trainers.map(
-      ({key}) => Key.replace(/\.json$/, ""));
+      ({Key}) => Key.replace(/\.json$/, ""));
     res.send(trainerNames);
   } catch (err) {
     next(err);
@@ -78,9 +78,6 @@ router.delete("/trainer/:trainerName", async (req, res, next) => {
   }
 });
 
-
-
-
 /** ポケモンの追加 */
 
 // router.post
@@ -98,18 +95,34 @@ router.put("/trainer/:trainerName/pokemon", async (req, res, next) => {
         nickname:"",order,name,sprites:{front_default},
       });
 
-
       // TODO: 削除系 API エンドポイントを利用しないかぎりポケモンは保持する
       const result = await upsertTrainer(trainerName, trainer);
       res.status(result["$metadata"].httpStatusCode).send(result);
     } catch (err) {
       console.error(err); // エラーメッセージをコンソールに出力
-      next(err);
+      next(err); 
     }
   },
 );
 
 /** ポケモンの削除 */
 // TODO: ポケモンを削除する API エンドポイントの実装
+router.delete(
+  "/trainer/:trainerName/pokemon/:pokemonId",
+  async (req, res, next) => {
+    try {
+      const {trainerName, pokemonId} = req.params;
+      const trainer = await findTrainer(trainerName);
+      const index = trainer.pokemons.findIndex(
+        (pokemon) => String(pokemon.id) === pokemonId,
+      );
+      trainer.pokemons.splice(index, 1);
+      const result = await upsertTrainer(trainerName, trainer);
+      res.status(result["$metadata"].httpStatusCode).send(result);
+    } catch (err) {
+      next(err);
+    }
+  },
+);
 
 export default router;
