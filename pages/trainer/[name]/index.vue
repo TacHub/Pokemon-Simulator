@@ -87,8 +87,54 @@ const {
         <GamifyButton @click="onOpenRelease(pokemon)">オーキド博士に送る</GamifyButton>      
     </GamifyList>
     <!-- マサラタウンに帰る前に、確認 -->
-    <!-- オーキド博士に送る前に、確認 -->
+    <GamifyDialog
+      v-if="deleteDialog"
+      id="confirm-delete"
+      title="確認"
+      description="本当にマサラタウンに帰るんだな？！この操作は取り消せないぞ！！"
+      @close="onCloseDelete"
+      >
+      <GamifyList :border="false" direction="horizon">
+        <GamifyItem>
+          <GamifyButton @click="onCloseDelete">いいえ</GamifyButton>
+        </GamifyItem>
+        <GamifyItem>
+          <GamifyButton @click="onDelete">はい</GamifyButton>
+        </GamifyItem>
+      </GamifyList>
+    </GamifyDialog>
 
+    <!-- ポケモンのニックネーム変更 -->
+    <GamifyDialog
+      v-if = "nicknameDialog"
+      id="confirm-nickname"
+      title="ニックネーム"
+      :description="`${nicknameDialog.name}の新しいニックネームは？`"
+      @close="onCloseNickname"
+    >
+      <div class="item">
+        <label for="name">ニックネーム</label>
+        <input
+          id="name"
+          v-model="nickname"
+          @keydown.enter="onNickname(nicknameDialog)"
+        />
+      </div>
+      <!-- ニックネーム変更にキャンセル or 決定 -->
+      <GamifyList :border="false" direction="horizon">
+        <GamifyItem>
+          <GamifyButton @click="onCloseNickname">キャンセル</GamifyButton>
+        </GamifyItem>
+        <GamifyItem>
+          <GamifyButton @click="onNickname(nicknameDialog)">決定</GamifyButton
+          >
+        </GamifyItem>
+      </GamifyList>
+    </GamifyDialog>
+    <!-- オーキド博士に送る前に、確認 -->
+  <GamifyDialog>
+    
+  </GamifyDialog>
 
 
 
