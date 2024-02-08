@@ -104,7 +104,7 @@ router.put(
       res.status(result["$metadata"].httpStatusCode).send(result);
     } catch (err) {
       console.error(err); // エラーメッセージをコンソールに出力
-      next(err); 
+      next(err);
     }
   },
 );
