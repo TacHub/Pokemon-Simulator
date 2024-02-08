@@ -25,6 +25,9 @@ router.get("/trainers", async (_req, res, next) => {
 router.post("/trainer", async (req, res, next) => {
   try {
     // TODO: リクエストボディにトレーナー名が含まれていなければ400を返す
+    if (!("name" in req.body && req.body.name.length > 0))
+      return res.sendStatus(400);
+    const trainers = await findTrainers();
     // TODO: すでにトレーナー（S3 オブジェクト）が存在していれば409を返す
     const result = await upsertTrainer(req.body.name, req.body);
     res.status(result["$metadata"].httpStatusCode).send(result);
