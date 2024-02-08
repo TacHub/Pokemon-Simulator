@@ -13,7 +13,9 @@ router.get("/trainers", async (_req, res, next) => {
   try {
     const trainers = await findTrainers();
     // TODO: 期待するレスポンスボディに変更する
-    res.send(trainers);
+    const trainerNames = trainers.map(
+      ({key}) => Key.replace(/\.json$/, ""));
+    res.send(trainerNames);
   } catch (err) {
     next(err);
   }
