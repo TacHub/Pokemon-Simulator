@@ -79,12 +79,13 @@ const {
     <CatchButton :to="`/trainer/${route.params.name}/catch`"
       >ポケモンを掴まえる</CatchButton>
     <!-- ポケモンのニックネーム変更、博士へ送る -->
-      <GamifyList>
+    <GamifyList>
       <GamifyItem v-for="pokemon in trainer.pokemons" :key="pokemon.id">
         <img :src="pokemon.sprites.front_default" />
         <span class="pokemon-name">{{ pokemon.nickname || pokemon.name }}</span>
         <GamifyButton @click="onOpenNickname(pokemon)">ニックネームを付ける</GamifyButton>
         <GamifyButton @click="onOpenRelease(pokemon)">オーキド博士に送る</GamifyButton>      
+      </GamifyItem>
     </GamifyList>
     <!-- マサラタウンに帰る前に、確認 -->
     <GamifyDialog
