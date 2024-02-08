@@ -154,3 +154,28 @@ const {
   </div>
 
 </template>
+
+<style scoped>
+.item > label {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.gamify-item:hover img {
+  animation: bounce;
+  animation-duration: 0.8s;
+  animation-iteration-count: infinite;
+}
+
+.trainer-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.trainer-info > img {
+  width: 3rem;
+  height: 3rem;
+}
+</style>
