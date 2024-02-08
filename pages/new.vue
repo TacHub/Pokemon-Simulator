@@ -29,7 +29,9 @@ const { dialog, onOpen, onClose } = useDialog();
     <form @submit.prevent>
       <div class="item">
         <label for="name">名前</label>
-        <span id="name-description">特定の文字は取り除かれるぞ！</span>
+        <span id="name-description"
+          >特定の文字は取り除かれるぞ！</span
+        >
         <input
           id="name"
           v-model="trainerName"
@@ -37,7 +39,9 @@ const { dialog, onOpen, onClose } = useDialog();
           @keydown.enter="valid && onOpen(true)"
         />
       </div>
-      <GamifyButton type="button" :disabled="!valid" @click="onOpen(true)">決定</GamifyButton>
+      <GamifyButton type="button" :disabled="!valid" @click="onOpen(true)"
+        >決定</GamifyButton
+      >
     </form>
     <!-- ここまで、名前の入力と「決定」ボタンを反映 -->
     <GamifyDialog
@@ -56,7 +60,6 @@ const { dialog, onOpen, onClose } = useDialog();
         </GamifyItem>
       </GamifyList>
     </GamifyDialog>
-    <!-- 名前の確認欄を実装 -->
   </div>
 </template>
 

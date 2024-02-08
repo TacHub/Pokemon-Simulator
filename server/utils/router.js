@@ -1,5 +1,10 @@
 import { Router } from "express";
-import { findTrainers, upsertTrainer, findTrainer, deleteTrainer } from "~/server/utils/trainer";
+import { 
+  findTrainers, 
+  upsertTrainer, 
+  findTrainer, 
+  deleteTrainer, 
+} from "~/server/utils/trainer";
 import { findPokemon } from "~/server/utils/pokemon";
 
 const router = Router();
@@ -14,7 +19,8 @@ router.get("/trainers", async (_req, res, next) => {
     const trainers = await findTrainers();
     // TODO: 期待するレスポンスボディに変更する
     const trainerNames = trainers.map(
-      ({Key}) => Key.replace(/\.json$/, ""));
+      ({ Key }) => Key.replace(/\.json$/, "")
+      );
     res.send(trainerNames);
   } catch (err) {
     next(err);
@@ -80,12 +86,14 @@ router.delete("/trainer/:trainerName", async (req, res, next) => {
 
 /** ポケモンの追加 */
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0; // Local開発環境でこれを追加しないとエラーが出る
-router.put("/trainer/:trainerName/pokemon", async (req, res, next) => {
+router.put(
+  "/trainer/:trainerName/pokemon/:pokemonName",
+  async (req, res, next) => {
     try {
       const {trainerName, pokemonName} = req.params;
       // TODO: リクエストボディにポケモン名が含まれていなければ400を返す
-      const pokemon = await findPokemon(pokemonName);
       const trainer = await findTrainer(trainerName);
+      const pokemon = await findPokemon(pokemonName);
       const {
         order,name,sprites: { front_default },
       } = pokemon;
@@ -99,7 +107,7 @@ router.put("/trainer/:trainerName/pokemon", async (req, res, next) => {
       res.status(result["$metadata"].httpStatusCode).send(result);
     } catch (err) {
       console.error(err); // エラーメッセージをコンソールに出力
-      next(err); 
+      next(err);
     }
   },
 );
