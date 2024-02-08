@@ -91,17 +91,11 @@ router.put("/trainer/:trainerName/pokemon", async (req, res, next) => {
       const pokemon = await findPokemon(pokemonName);
       const trainer = await findTrainer(trainerName);
       const {
-        order,
-        name,
-        sprites: { front_default },
+        order,name,sprites: { front_default },
       } = pokemon;
       trainer.pokemons.push({
-        id: (trainer.pokemons[trainer.pokemons.length - 1].id + 1)
-        +1,
-        nickname:"",
-        order,
-        name,
-        sprites:{front_default},
+        id: (trainer.pokemons[trainer.pokemons.length - 1]?.id ?? 0) + 1,
+        nickname:"",order,name,sprites:{front_default},
       });
 
 
