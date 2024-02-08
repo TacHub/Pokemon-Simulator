@@ -55,6 +55,10 @@ router.post("/trainer/:trainerName", async (req, res, next) => {
   try {
     const { trainerName } = req.params;
     // TODO: トレーナーが存在していなければ404を返す
+    const trainers = await findTrainers();
+    if (!trainers.some(({Key})=> //someがfalseを返す場合は404を返す
+    Key === `${trainerName}.json`))
+      return res.sendStatus(404);
     const result = await upsertTrainer(trainerName, req.body);
     res.status(result["$metadata"].httpStatusCode).send(result);
   } catch (err) {
@@ -64,6 +68,9 @@ router.post("/trainer/:trainerName", async (req, res, next) => {
 
 /** トレーナーの削除 */
 // TODO: トレーナーを削除する API エンドポイントの実装
+
+
+
 
 /** ポケモンの追加 */
 router.post("/trainer/:trainerName/pokemon", async (req, res, next) => {
