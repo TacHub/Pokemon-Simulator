@@ -40,6 +40,15 @@ router.post("/trainer", async (req, res, next) => {
 
 /** トレーナーの取得 */
 // TODO: トレーナーを取得する API エンドポイントの実装
+router.get("/trainer/:trainerName", async (req, res, next) => {
+  try {
+    const { trainerName } = req.params;
+    const trainer = await findTrainer(trainerName);
+    res.send(trainer);
+  } catch (err) {
+    next(err);
+  }
+});
 
 /** トレーナーの更新 */
 router.post("/trainer/:trainerName", async (req, res, next) => {
