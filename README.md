@@ -1,10 +1,58 @@
 # 作業メモ
-1. startブランチ作成したら、"npm install"
-2. "npm i @aws-sdk/node-http-handler proxy-agent"のインストール
-3. 実装
-  * server/utils/routers.js
-  * server/utils/trainer.js
-  * pages/*
+研修時に実施した開発作業内容を記録。
+
+1. 準備
+
+    * リポジトリ、ブランチの作成
+      1. [lyceum-pokemon/skelton-start](https://github.com/webdino/lyceum-pokemon/tree/skeleton-start)のソースコードをzipダウンロードし、ローカルPCで解凍。
+      1. 自アカウントにて新規リポジトリ(Pokemon-Simulator)を作成し、mainブランチをもとに[startブランチ](https://github.com/TacHub/Pokemon-Simulator/tree/start)を作成。
+    * S3バケットの準備
+      1. AWS S3にアクセスし、[km-sd22-pokemon](https://s3.console.aws.amazon.com/s3/buckets/km-sd22-pokemon?region=ap-northeast-1&bucketType=general&tab=objects)バケットを作成。トレーナーの情報はjsonファイルとしてS3に格納される。
+    * インストールおよび環境設定ファイルの作成
+      1. ```.env```ファイルを作成し、NUXT_BUCKET_NAMEとNUXT_REGIONを指定
+      1. ```npm install```を実行
+      1. ```npm i @aws-sdk/node-http-handler proxy-agent```のインストール
+      1. ```npm run dev```でlocalhost:3000にアクセスできたことを確認。開発作業を開始。
+
+2. 開発作業
+
+    * サーバーサイド
+      * ```server/utils/routers.js```
+          * APIエンドポイントの定義、リクエストのハンドリングなど
+      * ```server/utils/trainer.js```      
+          * トレーナー・ポケモンに関するデータ操作(取得・追加・更新・削除)
+    * フロントサイド
+      * ```pages/index.vue```
+          * 「はじめから」「つづきから」選択ページ
+      * ```pages/new.bue```                 
+          * 新規トレーナー作成ページ 
+      * ```pages/trainer/index.vue```         
+          * 既存トレーナー選択ページ
+      * ```pages/trainer/[name]/catch.vue```  
+          * ポケモンを捕獲するページ
+      * ```pages/trainer/[name]/index.vue```  
+          * トレーナーの情報、ポケモンの追加など
+
+3. ビルド・デプロイ
+    * 開発作業後、```npm run build``` を実行し、```nom start```でビルドしたサーバを起動し動作確認。
+    * AWS AppRunnerを起動し、```ap-southeast-2```(シドニー)リージョンで[km-sd22_Pokemon-Simulator](https://ap-southeast-2.console.aws.amazon.com/apprunner/home?region=ap-southeast-2#/services/dashboard?service_arn=arn%3Aaws%3Aapprunner%3Aap-southeast-2%3A128411914028%3Aservice%2Fkm-sd22_Pokemon-Simulator%2F51d45ab268094621b47dac2b51d8c88f&active_tab=logs)というサービス名を作成
+        * 設定
+            * 設定ソース：```API```
+            * ランタイム：```Nodejs 18```
+            * 構築コマンド：```npm install; npm run build```
+            * 開始コマンド：```npm start```
+            * ポート：```3000```
+            * 仮想CPUとメモリ：```0.25 vCPU & 0.5 GB```
+            * インスタンスロール：```apprunner-have-s3fullaccess```
+        * 環境変数
+            * NUXT_BUKET_NAME：```km-sd-22-pokemon```
+            * NUXT_REGION：```ap-northeast-1```
+
+4. AWS上での挙動確認
+AppRunner上で正常にデプロイされ、下記ドメインでアプリケーションにアクセスできたことを確認。
+
+    * デフォルトドメイン：https://fpzqehhrpf.ap-southeast-2.awsapprunner.com/
+    * ソースコード格納場所：https://github.com/TacHub/Pokemon-Simulator/tree/main
 
 
 # lyceum-pokemon
